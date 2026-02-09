@@ -17,6 +17,14 @@ def divide(number1, number2):
         return None
     return number1 / number2
 
+def get_valid_number(prompt):
+    """Handles getting input to make sure it is actually a number."""
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
 print("Select operation.")
 print("1. Add")
 print("2. Subtract")
@@ -27,12 +35,8 @@ while True:
     choice = input("\nEnter choice: ")
 
     if choice in ("1", "2", "3", "4"):
-        try:
-            number1 = int(input("Enter first number: "))
-            number2 = int(input("Enter second number: "))
-        except ValueError:
-            print("Invalid input. Please enter a number.")
-            continue
+        number1 = get_valid_number("Enter first number: ")
+        number2 = get_valid_number("Enter second number: ")
 
         if choice == "1":
             print(f"\n{number1} + {number2} = {add(number1, number2)}")
@@ -44,7 +48,11 @@ while True:
             print(f"\n{number1} * {number2} = {multiply(number1, number2)}")
 
         elif choice == "4":
-            print(f"\n{number1} / {number2} = {divide(number1, number2)}")
+            result = divide(number1, number2)
+            if result is None:
+                print("Cannot divide by zero.")
+            else:
+                print(f"\n{number1} / {number2} = {divide(number1, number2)}")
 
         # check if user wants to do another calculation
         continue_calculation = input("\nDo you want to continue? (y/n): ")
@@ -54,5 +62,5 @@ while True:
             print("Invalid input. Please enter 'y' or 'n'.")
 
     else:
-        print("Invalid input. Please enter a number associated with an operation.")
+        print("Invalid input. Please enter 1, 2, 3, or 4.")
 
